@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  api:
+    container_name: api
+    restart: always
+    env_file:
+      - .db.env
+      - .env
+    build: .
+    image: miloszszcz/api:v1
+    expose:
+      - 5000
+    networks:
+      - db_network
+      - api_network
+    depends_on:
+      - db
+
+  proxy:
+    container_name: proxy
+    restart: always
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.1.1:80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - api_network
+    depends_on:
+      - api
+
+  db:
+    container_name: db
+    image: postgres:14.1-alpine3.15
+    ports:
+      - "127.0.1.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file: .db.env
+    networks:
+      - db_network
+
+networks:
+  db_network:
+    driver: bridge
+  api_network:
+    driver: bridge
+
+volumes:
+  postgres_data: null

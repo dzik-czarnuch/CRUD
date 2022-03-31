@@ -1,0 +1,52 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  showUsers: UsersResult!
+  showUser(id: ID!): UserResult!
+}
+
+type Mutation {
+  createUser(input: createUserInput!): UserPayload!
+  updateUser(input: updateUserInput!): UserPayload!
+  deleteUser(id: ID!): deleteUserPayload!
+}
+
+input createUserInput {
+  name: String!
+}
+
+input updateUserInput {
+  id: ID!
+  name: String!
+}
+
+type UserPayload {
+  success: Boolean!
+  errors: [String]
+  user: User
+}
+
+type deleteUserPayload {
+  success: Boolean!
+  errors: [String]
+}
+
+type UserResult {
+  success: Boolean!
+  errors: [String]
+  user: User
+}
+
+type UsersResult {
+  success: Boolean!
+  errors: [String]
+  users: [User]
+}
+
+type User {
+  id: ID!
+  name: String!
+}
