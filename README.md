@@ -4,6 +4,7 @@
 - kustomize v4.5.4 (https://kubectl.docs.kubernetes.io/installation/kustomize/)
 - kubectl v1.22.2
 - helm v3.6.3
+- repo api na dockerhubie: https://hub.docker.com/r/miloszszcz/api
 
 ## Start lokalnego środowiska (budowanie obrazów)
 
