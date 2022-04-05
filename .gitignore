@@ -113,3 +113,4 @@ cython_debug/
 *.sw?
 
 zadanko.code-workspace
+charts/

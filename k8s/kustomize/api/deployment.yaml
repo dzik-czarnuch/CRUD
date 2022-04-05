@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: crud
+      version: v1
+      env: dev
+  template:
+    metadata:
+      labels:
+        app: crud
+        version: v1
+        env: dev
+    spec:
+      containers:
+      - env: 
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: crud-db-secret
+              optional: false
+        envFrom:
+          - secretRef:
+              name: crud-api-secret
+              optional: false
+        name: api
+        image: miloszszcz/api:v1
+        ports:
+        - name: http
+          containerPort: 5000
+          protocol: TCP
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /graphql
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /graphql
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+          requests:
+            cpu: 250m
+            memory: "128Mi"

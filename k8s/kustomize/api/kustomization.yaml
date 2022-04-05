@@ -1,0 +1,29 @@
+namespace: crud
+
+namePrefix: crud-
+
+commonLabels:
+  app: crud
+  version: v1
+  env: dev
+
+resources:
+  - deployment.yaml
+  - svc.yaml
+  - ingress.yaml
+
+configMapGenerator:
+  - name: env
+    literals:
+      - DEBUG=True
+
+secretGenerator:
+- name: api-secret
+  literals:
+  - POSTGRES_SERVICE_NAME=crud-postgresql
+  - POSTGRES_USER=postgres_user
+  - POSTGRES_DB=postgres_db
+  type: Opaquea
+
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,3 +1,10 @@
+## Użyte narzędzia
+
+- kind v0.11.1 (https://kind.sigs.k8s.io/docs/user/quick-start)
+- kustomize v4.5.4 (https://kubectl.docs.kubernetes.io/installation/kustomize/)
+- kubectl v1.22.2
+- helm v3.6.3
+
 ## Start lokalnego środowiska (budowanie obrazów)
 
 ```console
@@ -101,4 +108,37 @@ query {
     }
   }
 }
+```
+
+## Start lokalnego klastra k8s
+
+```console
+cd /k8s
+sh kind-cluster.sh
+```
+
+#### Budowanie aplikacji
+
+```console
+cd /kustomize
+kustomize build --enable-helm| kubectl apply -f-
+```
+
+#### Dostęp do klienta w przeglądarce po adresie
+
+```console
+localhost/graphql
+```
+
+## Efekt: Pody chodzą, UI działa :D
+
+1. Pody</br>
+   <img src="assets/pody.png">
+2. Klient w przeglądarce</br>
+   <img src="assets/ui.png">
+
+#### Pora usunąć klaster
+
+```console
+kind delete cluster --name crud-cluster
 ```

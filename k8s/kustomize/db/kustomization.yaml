@@ -1,0 +1,20 @@
+namespace: crud
+
+namePrefix: crud-
+
+helmCharts:
+- name: postgresql
+  repo: https://charts.bitnami.com/bitnami
+  version: 11.1.12
+  releaseName: postgresql
+  valuesFile: db.yaml
+
+secretGenerator:
+- name: db-secret
+  literals:
+  - postgres-password=supertajnehasloadmina
+  - password=supertajnehaslo
+  type: Opaque
+
+generatorOptions:
+  disableNameSuffixHash: true

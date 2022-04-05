@@ -1,0 +1,15 @@
+auth:
+  enablePostgresUser: true
+  username: "postgres_user"
+  database: "postgres_db"
+  existingSecret: crud-db-secret
+
+primary:
+  persistence:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+
+readReplicas:
+  replicaCount: 1
