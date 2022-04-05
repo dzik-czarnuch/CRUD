@@ -37,7 +37,6 @@ docker-compose down -v
 
 ## Przykładowe requesty
 
----
 
 #### Dodawanie użytkownika
 
